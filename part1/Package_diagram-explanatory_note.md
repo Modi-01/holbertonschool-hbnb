@@ -20,6 +20,10 @@ The application is structured into three primary layers:
 ### Persistence Layer (Database Access)
 -	Responsible for storing and retrieving data.
 
+## HBNB Package Diagram:
+<img width="1723" height="1416" alt="HBNB PackageDiagram" src="https://github.com/user-attachments/assets/850ded9d-2c80-45a3-9c05-0a03484c02a6" />
+
+
 
 ## Facade Pattern Explanation
 The Facade Pattern streamlines interactions between layers by providing a single, simplified interface:
