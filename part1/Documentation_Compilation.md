@@ -26,3 +26,97 @@ The Facade Pattern streamlines interactions between layers by providing a single
 - The Presentation Layer calls HBnBFacade.
 - The Facade coordinates business workflows (e.g., validate input, apply rules, call repositories).
 - The Persistence Layer remains encapsulated behind the Facade and repository access, preventing direct coupling.
+
+- ## Business Logic Layer
+
+### Class Diagram
+
+<img width="1529" height="929" alt="Class digram" src="https://github.com/user-attachments/assets/f4e2068d-cda5-463b-8f0d-3972fa3bc03c" />
+
+#### Overview
+
+The core entities of the system include User, Place, Review, and Amenity. Each entity:
+
+- Has a unique identifier (ID).
+
+- Records creation and update timestamps (for audit and tracking).
+
+- **The relationships reflect the requirements:**
+
+- A User can create multiple Places (ownership).
+
+- A Place can have multiple Amenities.
+
+- A Review references exactly one User and one Place.
+
+#### Entities and Requirements Mapping
+
+## User
+
+- **Attributes (minimum required):**
+
+- first_name
+
+- last_name
+
+- email
+
+- password
+
+- is  admin
+
+- **Required behaviors:**
+
+- Users can be created (registered), updated, and deleted.
+
+## Place
+
+- **Attributes (minimum required):**
+
+- name
+
+- description
+
+- Price per night
+
+- latitude
+
+- longitude
+
+- owner
+
+- review
+
+- amenities (list/collection of amenities)
+
+- **Required behaviors:**
+
+- Places can be created, updated, deleted, and listed.
+
+## Review
+
+- **Attributes (minimum required):**
+
+- rating
+
+- comment
+
+- user (association to User)
+
+- place (association to Place)
+
+- **Required behaviors:**
+
+- Reviews can be created, updated, deleted, and listed by place.
+
+## Amenity
+
+- **Attributes (minimum required):**
+
+- name
+
+- place
+
+- **Required behaviors:**
+
+- Amenities can be created, updated, deleted, and listed.
