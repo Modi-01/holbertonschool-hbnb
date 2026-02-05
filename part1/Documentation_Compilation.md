@@ -10,6 +10,9 @@ HBnB application is a simplified Airbnb-like application that allows users to:
 - Manage amenities that can be associated with places.
 - The application follows a **three-layer architecture** and uses a **Facade Pattern** to ensure modularity, maintainability, and separation of concerns.
 ## High-Level Architecture
+### Package Diagram
+<img width="1723" height="1416" alt="HBNB PackageDiagram" src="https://github.com/user-attachments/assets/6d862a32-2932-4c59-946d-e438bbc8cdae" />
+
 #### Overview
 The system is divided into three layers:
 - **Presentation Layer (Services, API)**  
