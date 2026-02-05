@@ -4,7 +4,7 @@
 The User entity represents the users of the system.
 It stores basic user information such as first name, last name, email, and password, along with a flag indicating whether the user is an administrator.
 
-##Key Attributes:
+## Key Attributes:
 
 first_name
 
@@ -16,7 +16,7 @@ password
 
 is_admin
 
-##Key Methods:
+### Key Methods:
 
 create()
 
@@ -32,7 +32,7 @@ This entity contributes to the business logic by allowing users to own places an
 The Place entity represents the properties listed in the application.
 Each place is associated with a single user (the owner) and contains descriptive information, pricing, and geographic location.
 
-##Key Attributes:
+## Key Attributes:
 
 title
 
@@ -44,7 +44,7 @@ latitude
 
 longitude
 
-##Key Methods:
+### Key Methods:
 
 create()
 
@@ -60,13 +60,13 @@ This entity plays a central role in the system by linking users, amenities, and 
 The Review entity represents reviews written by users about places they have visited.
 Each review is associated with one user and one place.
 
-##Key Attributes:
+## Key Attributes:
 
 rating
 
 comment
 
-##Key Methods:
+### Key Methods:
 
 create()
 
@@ -81,13 +81,13 @@ This entity supports user feedback and evaluation of places.
 
 The Amenity entity represents facilities or features that can be associated with places, such as Wi-Fi or parking.
 
-##Key Attributes:
+## Key Attributes:
 
 name
 
 description
 
-##Key Methods:
+### Key Methods:
 
 create()
 
@@ -103,7 +103,7 @@ This entity allows places to be categorized based on the services they offer.
 The BaseModel entity is the base class inherited by all other entities.
 It provides shared attributes to ensure consistency and traceability across the system.
 
-##Key Attributes:
+## Key Attributes:
 
 id (UUID)
 
@@ -112,6 +112,10 @@ created_at
 updated_at
 
 ---
+<img width="1529" height="929" alt="Class digram" src="https://github.com/user-attachments/assets/34de6edd-6194-4a97-85bd-fbfd97bac1da" />
+
+
+
 
 ## *🔗 Relationships Between Entities*
 
