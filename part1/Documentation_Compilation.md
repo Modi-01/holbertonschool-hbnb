@@ -9,3 +9,17 @@ HBnB application is a simplified Airbnb-like application that allows users to:
 - Leave reviews (rating and comment) for places.
 - Manage amenities that can be associated with places.
 - The application follows a **three-layer architecture** and uses a **Facade Pattern** to ensure modularity, maintainability, and separation of concerns.
+## High-Level Architecture
+#### Overview
+The system is divided into three layers:
+- **Presentation Layer (Services, API)**  
+Handles user interactions and exposes API endpoints. It delegates application use-cases to the Business Logic layer through a unified entry point (facade).
+- **Business Logic Layer (Models)**  
+Contains the core domain entities (User, Place, Review, Amenity) and application rules. It provides a **Facade** that orchestrates use-cases and coordinates persistence actions.
+- **Persistence Layer**  
+Responsible for data storage and retrieval. It provides repositories/DAOs (or equivalent) that the Business Logic layer uses for CRUD operations.
+### Facade Pattern Explanation
+The Facade Pattern streamlines interactions between layers by providing a single, simplified interface:
+- The Presentation Layer calls HBnBFacade.
+- The Facade coordinates business workflows (e.g., validate input, apply rules, call repositories).
+- The Persistence Layer remains encapsulated behind the Facade and repository access, preventing direct coupling.
