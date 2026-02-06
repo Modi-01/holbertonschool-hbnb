@@ -1,66 +1,21 @@
 # Explanatory Notes – Sequence Diagrams
 
-This document provides explanatory notes for the sequence diagrams created as part of Task 2.
-Each diagram illustrates the interaction between the Presentation Layer, Business Logic Layer,
-and Persistence Layer for core API calls in the HBnB application.
+This document provides detailed explanatory notes for the sequence diagrams created for the HBnB application as part of the API Interaction Flow documentation. The sequence diagrams are designed to visually represent how the core API calls are processed across the different layers of the system, including the Presentation Layer (UI and API), the Business Logic Layer, and the Persistence Layer (Database).
 
----
+The purpose of these diagrams is to clearly demonstrate the runtime behavior of the application by illustrating the order of interactions between system components, how user requests are handled, validated, and processed, and how responses are returned to the user. By modeling these interactions visually, the diagrams reinforce the concept of separation of concerns and provide a strong foundation for understanding system behavior prior to implementation.
 
-## User Registration
+![User Registration Sequence Diagram](user registration diagrams 1.0.png)
 
-This sequence diagram illustrates the user registration process within the HBnB application.
+The User Registration sequence diagram describes the complete workflow involved in registering a new user in the HBnB application. The process begins when the user interacts with the UI to access the registration page and enters the required information such as first name, last name, email, and password. Once the user submits the form, the UI sends a registration request to the API layer. The API forwards this request to the Business Logic layer, where the data is validated according to the system’s rules. After successful validation, the user data is passed to the Persistence layer and stored in the database. Finally, a success response is returned from the database through the Business Logic and API layers back to the UI, confirming that the account has been created successfully. This diagram highlights the structured flow of data, validation logic, and clear responsibility of each layer involved in user management.
 
-The flow begins when the user opens the registration page and enters the required information
-(name, email, and password) through the UI. The UI sends the registration request to the API,
-which forwards the data to the Business Logic layer for validation.
+![Place Creation Sequence Diagram](place creation diagrams 1.0.png)
 
-Once the data is validated, the Business Logic layer stores the new user information in the
-database through the Persistence layer. A success response is then returned back to the user.
+The Place Creation sequence diagram illustrates how a user creates a new place listing within the HBnB application. The sequence starts when the user fills out the place creation form through the UI, providing details such as name, description, price, location, and other relevant attributes. Upon submission, the UI sends the place data to the API, which acts as the entry point to the backend system. The API forwards the request to the Business Logic layer, where the place data is validated and prepared for persistence. Once validated, the Business Logic layer communicates with the Persistence layer to store the new place in the database. After the place is successfully saved, a confirmation response flows back through the API to the UI, informing the user that the place has been created. This diagram emphasizes controlled data flow, validation mechanisms, and proper handling of user-generated content.
 
-This diagram demonstrates the separation of responsibilities between system layers and
-ensures proper validation and data persistence.
+![Review Submission Sequence Diagram](review submission diagrams 1.0.png)
 
----
+The Review Submission sequence diagram represents the process of submitting a review for a place. The flow begins when a user writes a review that includes a rating and a textual comment through the UI. After submission, the UI sends the review data to the API, which forwards it to the Business Logic layer for validation and processing. The Business Logic layer ensures that the review meets system requirements and associates it correctly with the corresponding user and place. The validated review is then persisted in the database through the Persistence layer. A success response is returned back through the API and UI layers, confirming that the review has been successfully submitted. This sequence demonstrates how user feedback is managed within the system while maintaining data integrity and consistency.
 
-## Place Creation
+![Fetching a List of Places Sequence Diagram](fetching a list of places diagrams 1.0.png)
 
-This sequence diagram represents the process of creating a new place listing.
-
-The user fills in the place details through the UI and submits the form. The UI sends the place
-data to the API, which passes it to the Business Logic layer for validation and processing.
-
-After validation, the place data is saved in the database via the Persistence layer.
-A confirmation response is returned to the user indicating that the place has been created
-successfully.
-
-This sequence highlights how user-generated content flows through the system in a structured
-and controlled manner.
-
----
-
-## Review Submission
-
-This sequence diagram describes the workflow for submitting a review for a place.
-
-The user writes a review that includes a rating and comment through the UI. The review data
-is sent to the API and then forwarded to the Business Logic layer for validation.
-
-Once validated, the review is stored in the database through the Persistence layer.
-A success response is returned to the user confirming that the review has been submitted.
-
-This diagram emphasizes how user feedback is handled while maintaining data integrity.
-
----
-
-## Fetching a List of Places
-
-This sequence diagram illustrates the process of retrieving a list of places based on
-user-defined criteria.
-
-The user requests a list of places through the UI. The request is sent to the API and then
-processed by the Business Logic layer, where filtering and sorting rules are applied.
-
-The database is queried to retrieve the matching places. The resulting list is returned
-through the API to the UI and displayed to the user.
-
-This sequence demonstrates efficient data retrieval and clear interaction between system layers.
+The Fetching a List of Places sequence diagram explains how the system retrieves a list of places based on specific filtering or search criteria. The process begins when the user initiates a request through the UI, such as searching or browsing available places. The UI sends the request to the API, which forwards it to the Business Logic layer. The Business Logic layer applies the necessary filtering and sorting rules before querying the database through the Persistence layer. Once the database returns the matching place data, the Business Logic layer builds the response and sends it back to the API. The API then forwards the result to the UI, where the list of places is displayed to the user. This diagram highlights efficient data retrieval, structured processing, and seamless communication between all system layers.
