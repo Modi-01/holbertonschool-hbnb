@@ -169,3 +169,12 @@ This diagram represents the submission of a user review, including validation an
 
 This diagram illustrates how the system processes a request to retrieve a list of places based on
 filtering criteria.
+
+## Conclusion
+This technical documentation provides a clear and structured blueprint for HBnB Application by presenting:
+- A high-level architecture with a layered design and a facade-based interaction model.
+- The business entities (User, Place, Review, Amenity) and how they map to functional requirements.
+- API interaction flows that demonstrate the separation of concerns across layers.
+
+This ensures the next implementation phases can proceed with a shared understanding of the intended design and system responsibilities.
+
