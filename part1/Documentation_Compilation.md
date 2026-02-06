@@ -120,3 +120,25 @@ The core entities of the system include User, Place, Review, and Amenity. Each e
 - **Required behaviors:**
 
 - Amenities can be created, updated, deleted, and listed.
+
+## API Interaction Flow
+
+### Sequence Diagrams Overview
+
+The sequence diagrams provide a detailed view of how core API calls are handled within the HBnB application.
+They illustrate the step-by-step interaction between the Presentation Layer, Business Logic Layer, and
+Persistence Layer for key user actions such as user registration, place creation, review submission,
+and fetching a list of places.
+
+These diagrams help clarify the system’s runtime behavior by showing how requests flow through the
+application layers, how data is validated, and how responses are returned to the user.
+They also reinforce the separation of concerns and ensure a clear understanding of system interactions
+before implementation.
+
+---
+
+### User Registration Sequence Diagram
+This diagram illustrates the process of registering a new user, starting from the UI request and
+ending with data persistence in the database.
+
+![User Registration Sequence Diagram](user%20registration%20diagrams%201.0.png)
