@@ -139,17 +139,30 @@ before implementation.
 ---
 
 ### User Registration Sequence Diagram
-This diagram illustrates the process of registering a new user, starting from the UI request and
-ending with data persistence in the database.
 
 ![User Registration Sequence Diagram](user%20registration%20diagrams%201.0.png)
 
+This diagram illustrates the process of registering a new user, starting from the UI request and
+ending with data persistence in the database.
 ---
 
 ### Place Creation Sequence Diagram
-This diagram shows how a user creates a new place listing and how the request flows through the API
-and Business Logic layers before being stored.
 
 ![Place Creation Sequence Diagram](place%20creation%20diagrams%201.0.png)
-
+This diagram shows how a user creates a new place listing and how the request flows through the API
+and Business Logic layers before being stored.
 ---
+
+### Review Submission Sequence Diagram
+
+![Review Submission Sequence Diagram](review%20submission%20diagrams%201.0.png)
+
+This diagram represents the submission of a user review, including validation and storage.
+---
+
+### Fetching a List of Places Sequence Diagram
+
+![Fetching a List of Places Sequence Diagram](fetching%20a%20list%20of%20places%20diagrams%201.0.png)
+
+This diagram illustrates how the system processes a request to retrieve a list of places based on
+filtering criteria.
