@@ -121,6 +121,7 @@ The core entities of the system include User, Place, Review, and Amenity. Each e
 
 - Amenities can be created, updated, deleted, and listed.
 
+
 ## API Interaction Flow
 
 ### Sequence Diagrams Overview
@@ -142,3 +143,13 @@ This diagram illustrates the process of registering a new user, starting from th
 ending with data persistence in the database.
 
 ![User Registration Sequence Diagram](user%20registration%20diagrams%201.0.png)
+
+---
+
+### Place Creation Sequence Diagram
+This diagram shows how a user creates a new place listing and how the request flows through the API
+and Business Logic layers before being stored.
+
+![Place Creation Sequence Diagram](place%20creation%20diagrams%201.0.png)
+
+---
