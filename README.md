@@ -6,4 +6,11 @@
 ## Part 1 — Technical Documentation
 This part provides a structured blueprint of the system before implementation. The goal is to establish a shared understanding of the system’s design, responsibilities, and interactions across layers—making later development phases clearer, faster, and less error-prone.
 
+## Authors
+- **Moudhi Almutlaq.**
+- **Yara Aldossari.**
+- **Randa Baeshen.**
+
+## Note
+This document will be updated as the project progresses.
 
