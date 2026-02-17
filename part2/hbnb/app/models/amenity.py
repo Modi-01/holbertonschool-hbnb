@@ -1,26 +1,28 @@
+#!/usr/bin/python3
 from app.models.base_model import BaseModel
 
 
 class Amenity(BaseModel):
-    
-    def __init__(self, **kwargs):
-        super().__init__(**kwargs)
-        self.name = kwargs.get("name")
-        self.places = kwargs.get("places", [])  
 
-    def create_amenity(self):
-        pass
 
-    def update_amenity(self):
-        pass
+    def __init__(self, name):
+        super().__init__()
+        self.name = None
+        self.places = []
 
-    def delete_amenity(self):
-        pass
+        self.set_name(name)
 
-    def to_dict(self):
-        data = super().to_dict()
-        data.update({
-            "name": self.name,
-            "places": self.places,
-        })
-        return data
+    def set_name(self, name):
+        if not isinstance(name, str) or not name.strip():
+            raise ValueError("name is required and must be a non-empty string")
+        name = name.strip()
+        if len(name) > 50:
+            raise ValueError("name must not exceed 50 characters")
+        self.name = name
+        self.save()
+
+    def update_amenity(self, data):
+        if not isinstance(data, dict):
+            raise ValueError("data must be a dict")
+        if "name" in data:
+            self.set_name(data["name"])
