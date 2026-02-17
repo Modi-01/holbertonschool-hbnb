@@ -1,21 +1,21 @@
+#!/usr/bin/python3
+"""BaseModel module."""
+
 import uuid
 from datetime import datetime
 
-
 class BaseModel:
     """
-    Base model providing:
-    - UUID id
-    - created_at
-    - updated_at
-    - save()
-    - to_dict()
+    Base class for all entities.
+    
     """
 
-    def __init__(self, **kwargs):
-        self.id = kwargs.get("id", str(uuid.uuid4()))
-        self.created_at = kwargs.get("created_at", datetime.utcnow())
-        self.updated_at = kwargs.get("updated_at", datetime.utcnow())
+    def __init__(self):
+        
+        self.id = str(uuid.uuid4())
+        now = datetime.utcnow()
+        self.created_at = now
+        self.updated_at = now
 
     def save(self):
         
@@ -23,9 +23,11 @@ class BaseModel:
 
     def to_dict(self):
         
-        return {
-            "id": self.id,
-            "created_at": self.created_at.isoformat(),
-            "updated_at": self.updated_at.isoformat(),
-            "__class__": self.__class__.__name__,
-        }
+        data = self.__dict__.copy()
+
+        for key in ("created_at", "updated_at"):
+            if key in data and hasattr(data[key], "isoformat"):
+                data[key] = data[key].isoformat()
+
+        data["__class__"] = self.__class__.__name__
+        return data
