@@ -15,3 +15,19 @@ class AmenitiesCollection(Resource):
         """
         amenities = facade.amenities.list_all()
         return [a.to_dict() for a in amenities], 200
+def post(self):
+        """
+        POST /api/v1/amenities/
+        Create a new amenity
+        """
+        data = request.get_json(silent=True) or {}
+
+        name = data.get("name")
+        if not name:
+            return {"error": "name is required"}, 400
+try:
+            amenity = facade.create_amenity(name)
+            return amenity.to_dict(), 201
+        except ValueError as e:
+            return {"error": str(e)}, 400
+            
