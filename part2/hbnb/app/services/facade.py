@@ -1,147 +1,132 @@
-# -------- Place Methods (Task 4 required) --------
-    def get_place(self, place_id):
-        return self.places.get(place_id)
+#!/usr/bin/python3
 
-    def get_all_places(self):
-        return self.places.list_all()
+from app.models.user import User
+from app.models.place import Place
+from app.models.review import Review
+from app.models.amenity import Amenity
+from app.persistence.repository import InMemoryRepository
 
-    def create_place_from_api(self, place_data):
-        """
-        place_data expects keys from API:
-        title, description, price, latitude, longitude, owner_id, amenities (list of amenity ids)
-        """
-        if not isinstance(place_data, dict):
-            raise ValueError("place_data must be a dict")
 
-        owner_id = place_data.get("owner_id")
-        if not owner_id:
-            raise ValueError("owner_id is required")
+class HBnBFacade:
+    def __init__(self):
+        self.users = InMemoryRepository()
+        self.places = InMemoryRepository()
+        self.reviews = InMemoryRepository()
+        self.amenities = InMemoryRepository()
 
+    # -------- User Methods --------
+    def create_user(self, email, password, first_name, last_name, is_admin=False):
+        if email is None:
+            raise ValueError("email is required")
+
+        email = email.strip().lower()
+        for u in self.users.list_all():
+            if u.email == email:
+                raise ValueError("email must be unique")
+
+        user = User(
+            email=email,
+            password=password,
+            first_name=first_name,
+            last_name=last_name,
+            is_admin=is_admin,
+        )
+        return self.users.add(user)
+
+    def list_users(self):
+        return self.users.list_all()
+
+    def get_user(self, user_id):
+        return self.users.get(user_id)
+
+    def update_user(self, user_id, data):
+        user = self.users.get(user_id)
+        if user is None:
+            raise ValueError("user not found")
+        user.update_user(data)
+        return user
+
+    def delete_user(self, user_id):
+        return self.users.delete(user_id)
+
+    # -------- Place Methods --------
+    def create_place(self, name, owner_id, description="", price_per_night=0, latitude=0.0, longitude=0.0):
         owner = self.users.get(owner_id)
         if owner is None:
             raise ValueError("owner must exist")
 
-        title = place_data.get("title")
-        if not isinstance(title, str) or not title.strip():
-            raise ValueError("title is required")
-
-        description = place_data.get("description", "")
-        price = place_data.get("price", 0)
-        latitude = place_data.get("latitude", 0.0)
-        longitude = place_data.get("longitude", 0.0)
-
-        # Place model validates latitude/longitude and price_per_night >= 0
         place = Place(
-            name=title,  # mapping title -> name
+            name=name,
             owner=owner,
             description=description,
-            price_per_night=price,  # mapping price -> price_per_night
+            price_per_night=price_per_night,
             latitude=latitude,
-            longitude=longitude
+            longitude=longitude,
         )
+        return self.places.add(place)
 
-        place = self.places.add(place)
+    def list_places(self):
+        return self.places.list_all()
 
-        # handle amenities ids list
-        amenity_ids = place_data.get("amenities", [])
-        if amenity_ids is None:
-            amenity_ids = []
-        if not isinstance(amenity_ids, list):
-            raise ValueError("amenities must be a list of amenity ids")
+    def get_place(self, place_id):
+        return self.places.get(place_id)
 
-        for amenity_id in amenity_ids:
-            amenity = self.amenities.get(amenity_id)
-            if amenity is None:
-                raise ValueError("amenity must exist")
-            place.add_amenity(amenity)
-
-        return place
-
-    def update_place_from_api(self, place_id, place_data):
-        """
-        Update place using API keys:
-        title, description, price, latitude, longitude, owner_id, amenities
-        """
+    def update_place(self, place_id, data):
         place = self.places.get(place_id)
         if place is None:
             raise ValueError("place not found")
 
-        if not isinstance(place_data, dict):
-            raise ValueError("place_data must be a dict")
-
-        data = {}
-
-        if "title" in place_data:
-            data["name"] = place_data.get("title")
-        if "description" in place_data:
-            data["description"] = place_data.get("description")
-        if "price" in place_data:
-            data["price_per_night"] = place_data.get("price")
-        if "latitude" in place_data:
-            data["latitude"] = place_data.get("latitude")
-        if "longitude" in place_data:
-            data["longitude"] = place_data.get("longitude")
-
-        # owner update
-        if "owner_id" in place_data:
-            owner = self.users.get(place_data.get("owner_id"))
+        if "owner_id" in data:
+            owner = self.users.get(data["owner_id"])
             if owner is None:
                 raise ValueError("owner must exist")
+            data = data.copy()
             data["owner"] = owner
+            data.pop("owner_id")
 
-        # apply updates
-        if data:
-            place.update_place(data)
-
-        # update amenities (replace list)
-        if "amenities" in place_data:
-            amenity_ids = place_data.get("amenities") or []
-            if not isinstance(amenity_ids, list):
-                raise ValueError("amenities must be a list of amenity ids")
-
-            # reset current amenities safely
-            place.amenity = []
-            for amenity_id in amenity_ids:
-                amenity = self.amenities.get(amenity_id)
-                if amenity is None:
-                    raise ValueError("amenity must exist")
-                place.add_amenity(amenity)
-
+        place.update_place(data)
         return place
 
-    # -------- Review Methods (Task 5 required) --------
-    def get_review(self, review_id):
-        return self.reviews.get(review_id)
+    def delete_place(self, place_id):
+        return self.places.delete(place_id)
 
-    def get_all_reviews(self):
-        return self.reviews.list_all()
+    def search_place(self, criteria=None):
+        if criteria is None:
+            return self.places.list_all()
+        if not isinstance(criteria, dict):
+            raise ValueError("criteria must be a dict")
 
-    def get_reviews_by_place(self, place_id):
-        place = self.places.get(place_id)
-        if place is None:
-            raise ValueError("place not found")
-        # Place model keeps reviews in place.review list
-        return list(place.review)
+        name_q = criteria.get("name")
+        results = self.places.list_all()
+        if isinstance(name_q, str) and name_q.strip():
+            q = name_q.strip().lower()
+            results = [p for p in results if q in p.name.lower()]
+        return results
 
-    def create_review_from_api(self, review_data):
-        """
-        review_data expects keys from API:
-        text, rating, user_id, place_id
-        """
-        if not isinstance(review_data, dict):
-            raise ValueError("review_data must be a dict")
+    # -------- Amenity Methods --------
+    def create_amenity(self, name):
+        amenity = Amenity(name=name)
+        return self.amenities.add(amenity)
 
-        text = review_data.get("text")
-        rating = review_data.get("rating")
-        user_id = review_data.get("user_id")
-        place_id = review_data.get("place_id")
+    def list_amenities(self):
+        return self.amenities.list_all()
 
-        if not user_id:
-            raise ValueError("user_id is required")
-        if not place_id:
-            raise ValueError("place_id is required")
+    def get_amenity(self, amenity_id):
+        return self.amenities.get(amenity_id)
 
-        author = self.users.get(user_id)
+    def update_amenity(self, amenity_id, data):
+        amenity = self.amenities.get(amenity_id)
+        if amenity is None:
+            raise ValueError("amenity not found")
+        amenity.update_amenity(data)
+        return amenity
+
+    def delete_amenity(self, amenity_id):
+        return self.amenities.delete(amenity_id)
+
+    # -------- Review Methods --------
+    def create_review(self, text, rating, author_id, place_id):
+        author = self.users.get(author_id)
         if author is None:
             raise ValueError("author must exist")
 
@@ -152,37 +137,33 @@
         review = Review(text=text, rating=rating, author=author, place=place)
         self.reviews.add(review)
         place.add_review(review)
-
         return review
 
-    def update_review_from_api(self, review_id, review_data):
+    def list_reviews(self):
+        return self.reviews.list_all()
+
+    def get_review(self, review_id):
+        return self.reviews.get(review_id)
+
+    def update_review(self, review_id, data):
         review = self.reviews.get(review_id)
         if review is None:
             raise ValueError("review not found")
-        if not isinstance(review_data, dict):
-            raise ValueError("review_data must be a dict")
-
-        allowed = {}
-        if "text" in review_data:
-            allowed["text"] = review_data.get("text")
-        if "rating" in review_data:
-            allowed["rating"] = review_data.get("rating")
-
-        if not allowed:
-            raise ValueError("no valid fields to update")
-
-        review.update_review(allowed)
+        review.update_review(data)
         return review
 
-    def delete_review_from_api(self, review_id):
-        review = self.reviews.get(review_id)
-        if review is None:
-            raise ValueError("review not found")
+    def delete_review(self, review_id):
+        return self.reviews.delete(review_id)
 
-        # remove from place.review list too
-        place = review.place
-        if place and hasattr(place, "review") and review in place.review:
-            place.review.remove(review)
+    def add_amenity_to_place(self, place_id, amenity_id):
+        place = self.places.get(place_id)
+        if place is None:
+            raise ValueError("place not found")
 
-        deleted = self.reviews.delete(review_id)
-        return deleted
+        amenity = self.amenities.get(amenity_id)
+        if amenity is None:
+            raise ValueError("amenity not found")
+
+        place.add_amenity(amenity)
+        return place
+
