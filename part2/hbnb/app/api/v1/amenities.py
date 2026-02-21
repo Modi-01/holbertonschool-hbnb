@@ -34,7 +34,7 @@ class AmenitiesCollection(Resource):
     def post(self):
         data = api.payload
         if not isinstance(data.get('name'), str) or not data.get('name'):
-            return { "error": "Amenity name is required and must be a string."}
+            return { "error": "Amenity name is required and must be a string."}, 400
     
         amenity = facade.create_amenity(data)
 
@@ -61,6 +61,8 @@ class AmenityItem(Resource):
     def put(self, amenity_id):
         data = api.payload
         
+        if not isinstance(data.get('name'), str) or not data.get('name'):
+            return { "error": "Amenity name is required and must be a string."}, 400
         try:
             amenity = facade.update_amenity(amenity_id, data)
             return amenity.serialize(), 200
