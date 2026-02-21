@@ -74,17 +74,17 @@ class HBnBFacade:
 
         if not isinstance(owner, User) or not owner:
             raise ValueError("Owner couldn't be located.")
-
+        
         amenities = list()
 
-        if place_data['amenities'] and isinstance(place_data['amenities'], list):
+        if place_data.get('amenities') and isinstance(place_data.get('amenities'), list):
             for amenity_id in place_data['amenities']:
                 amenity = self.amenity_repo.get(amenity_id)
                 if not isinstance(amenity, Amenity) or not amenity:
                     raise ValueError("Amenity id is invalid.")
-
+                
                 amenities.append(amenity)
-
+        
         place = Place(
             name = place_data['title'],
             owner = owner,
@@ -108,7 +108,7 @@ class HBnBFacade:
         place = self.place_repo.get(place_id)
         if not isinstance(place, Place) or not place:
             raise ValueError("Place not found")
-
+        
         place.update_place(data)
 
         return { "message": "Place updated successfully" }
@@ -117,11 +117,13 @@ class HBnBFacade:
         place = self.place_repo.get(place_id)
         if not isinstance(place, Place) or not place:
             raise ValueError("Place not found")
-
+        
         return place.reviews
 
 
     # -------- End of Place Methods --------
+
+    
 
     # -------- Review Methods --------
     def create_review(self, review_data):
@@ -139,11 +141,11 @@ class HBnBFacade:
         for review in place.reviews:
             if(review.author == author):
                 raise ValueError("You already rated the place. You can edit your rating if you like. Rating id" + review.id)
-
+        
         review = Review(text = review_data['text'], rating = review_data['rating'], author = author, place = place)
         self.review_repo.add(review)
         place.add_review(review)
-
+        
         return review
 
     def get_all_reviews(self):
@@ -156,25 +158,26 @@ class HBnBFacade:
         review = self.review_repo.get(review_id)
         if not isinstance(review, Review) or not review:
             raise ValueError("review not found")
-
+        
         review.update_review(data)
-
+        
         return review
 
     def delete_review(self, review_id):
         review = self.review_repo.get(review_id)
         if not isinstance(review, Review) or not review:
             raise ValueError("review not found")
-
+        
         place = review.place
         if not isinstance(place, Place) or not place:
             raise ValueError("place must exist")
-
+        
         review_obj = next((r for r in place.reviews if r.id == review_id), None)
 
         if review_obj:
             place.reviews.remove(review_obj)
 
         self.review_repo.delete(review_id)
-     
-     # -------- End of Place Methods --------
+
+
+
