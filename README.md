@@ -14,3 +14,6 @@ This part provides a structured blueprint of the system before implementation. T
 ## Note
 This document will be updated as the project progresses.
 
+## Part 2 — Implementation of Business Logic and API Endpoints
+
+This part focuses on turning the Part 1 design into a working implementation using **Python**, **Flask**, and **flask-restx**. The main goal is to build the **Business Logic** and **Presentation** layers of the application in a clean and modular way.
