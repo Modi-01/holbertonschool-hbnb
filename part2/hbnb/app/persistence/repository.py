@@ -1,20 +1,29 @@
 #!/usr/bin/python3
+from abc import ABC, abstractmethod
 
-class InMemoryRepository:
-    """Store objects by id in memory."""
-
-    def __init__(self):
-        self._data = {}
-
+class Repository(ABC):
+    @abstractmethod
     def add(self, obj):
-        self._data[obj.id] = obj
-        return obj
+        pass
 
+    @abstractmethod
     def get(self, obj_id):
-        return self._data.get(obj_id)
+        pass
 
+    @abstractmethod
+    def get_all(self):
+        pass
+
+    @abstractmethod
+    def update(self, obj_id, data):
+        pass
+
+    @abstractmethod
     def delete(self, obj_id):
-        return self._data.pop(obj_id, None)
+        pass
 
-    def list_all(self):
-        return list(self._data.values())
+    @abstractmethod
+    def get_by_attribute(self, attr_name, attr_value):
+        pass
+
+class InMemoryRepository(Repository):
