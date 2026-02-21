@@ -21,20 +21,10 @@ class BaseModel:
         
         self.updated_at = datetime.utcnow()
 
-    def to_dict(self, exclude=None):
-        
-        data = self.__dict__.copy()
+    def update(self, data):
+        """Update the attributes of the object based on the provided dictionary"""
+        for key, value in data.items():
+            if hasattr(self, key):
+                setattr(self, key, value)
+        self.save()  # Update the updated_at timestamp
 
-        # Remove excluded fields
-        if exclude:
-            for field in exclude:
-                data.pop(field, None)
-
-        # Convert datetime to iso format
-
-        for key in ("created_at", "updated_at"):
-            if key in data and hasattr(data[key], "isoformat"):
-                data[key] = data[key].isoformat()
-
-        data["__class__"] = self.__class__.__name__
-        return data
