@@ -15,11 +15,6 @@ def _review_to_dict(review):
     }
 
 
-@ns.route("/")
-class ReviewsCollection(Resource):
-    def get(self):
-        reviews = facade.get_all_reviews()
-        return [_review_to_dict(r) for r in reviews], 200
 
     def post(self):
         data = request.get_json(silent=True) or {}
