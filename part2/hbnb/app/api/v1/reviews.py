@@ -24,7 +24,9 @@ def _review_to_dict(review):
         except ValueError as e:
             return {"error": str(e)}, 400
 
-
+@api.expect(review_model, validate=True)
+    @api.response(201, 'Review successfully created')
+    @api.response(400, 'Invalid input data')
 class ReviewItem(Resource):
     def get(self, review_id):
         review = facade.get_review(review_id)
