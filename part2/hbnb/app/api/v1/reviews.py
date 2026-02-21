@@ -25,7 +25,6 @@ def _review_to_dict(review):
             return {"error": str(e)}, 400
 
 
-@ns.route("/<string:review_id>")
 class ReviewItem(Resource):
     def get(self, review_id):
         review = facade.get_review(review_id)
