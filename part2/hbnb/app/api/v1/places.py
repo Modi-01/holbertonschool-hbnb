@@ -60,6 +60,8 @@ class PlacesCollection(Resource):
             
             return place.serializeNew(), 201
         except ValueError as e:
+            if "not found" in str(e).lower():
+                return {"error": "not found"}, 404
             return {"error": str(e)}, 400
         
        
@@ -97,7 +99,7 @@ class PlaceResource(Resource):
         has_extra = set(data.keys()) - required_fields
 
         if has_extra:
-            return {"error": "You can only update title, description, or price"}
+            return {"error": "You can only update title, description, or price"}, 400
 
         try:
             result = facade.update_place(place_id, data)
@@ -125,4 +127,3 @@ class PlaceReviewList(Resource):
             if "place not found" in str(e).lower():
                 return {"error": "place not found"}, 404
             return {"error": str(e)}, 400
-
