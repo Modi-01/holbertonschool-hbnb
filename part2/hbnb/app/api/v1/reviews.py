@@ -71,7 +71,7 @@ class ReviewResource(Resource):
         has_extra = set(data.keys()) - required_fields
 
         if has_extra:
-            return {"error": "You can only update text or rating"}
+            return {"error": "You can only update text or rating"}, 400
 
         try:
             review = facade.update_review(review_id, data)
@@ -96,4 +96,3 @@ class ReviewResource(Resource):
             if "not found" in str(e).lower():
                 return {"error": "review not found"}, 404
             return {"error": str(e)}, 400
-
