@@ -9,6 +9,8 @@ api = Namespace("amenities", description="Amenity operations")
 amenity_model = api.model('Amenity', {
     'name': fields.String(required=True, description='Name of the amenity')
 })
+
+
 @api.route("/")
 class AmenitiesCollection(Resource):
 
@@ -51,3 +53,18 @@ class AmenityItem(Resource):
             return {"error": "amenity not found"}, 404
         
         return amenity.serialize(), 200
+
+    """
+    PUT /api/v1/amenities/<amenity_id>
+    Update amenity
+    """
+    def put(self, amenity_id):
+        data = api.payload
+        
+        try:
+            amenity = facade.update_amenity(amenity_id, data)
+            return amenity.serialize(), 200
+        except ValueError as e:
+            if "not found" in str(e).lower():
+                return {"error": "user not found"}, 404
+            return {"error": str(e)}, 400
