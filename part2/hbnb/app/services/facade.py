@@ -66,3 +66,59 @@ class HBnBFacade:
         return amenity
     
     # -------- End of Amenity Methods --------
+
+    # -------- Place Methods --------
+
+    def create_place(self, place_data):
+        owner = self.user_repo.get(place_data['owner_id'])
+
+        if not isinstance(owner, User) or not owner:
+            raise ValueError("Owner couldn't be located.")
+
+        amenities = list()
+
+        if place_data['amenities'] and isinstance(place_data['amenities'], list):
+            for amenity_id in place_data['amenities']:
+                amenity = self.amenity_repo.get(amenity_id)
+                if not isinstance(amenity, Amenity) or not amenity:
+                    raise ValueError("Amenity id is invalid.")
+
+                amenities.append(amenity)
+
+        place = Place(
+            name = place_data['title'],
+            owner = owner,
+            description = place_data['description'],
+            price_per_night = place_data['price'],
+            latitude = place_data['latitude'],
+            longitude = place_data['longitude']
+        )
+
+        place.set_amenities(amenities)
+
+        return self.place_repo.add(place)
+
+    def get_all_places(self):
+        return self.place_repo.get_all()
+
+    def get_place(self, place_id):
+        return self.place_repo.get(place_id)
+
+    def update_place(self, place_id, data):
+        place = self.place_repo.get(place_id)
+        if not isinstance(place, Place) or not place:
+            raise ValueError("Place not found")
+
+        place.update_place(data)
+
+        return { "message": "Place updated successfully" }
+
+    def get_reviews_by_place(self, place_id):
+        place = self.place_repo.get(place_id)
+        if not isinstance(place, Place) or not place:
+            raise ValueError("Place not found")
+
+        return place.reviews
+
+
+    # -------- End of Place Methods --------
