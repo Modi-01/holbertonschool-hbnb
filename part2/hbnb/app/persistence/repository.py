@@ -27,7 +27,7 @@ class Repository(ABC):
         pass
 
 class InMemoryRepository(Repository):
-"""Store objects by id in memory."""
+    """Store objects by id in memory."""
 
     def __init__(self):
         self._storage = {}
