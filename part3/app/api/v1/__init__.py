@@ -7,7 +7,6 @@ from app.api.v1.protected import api as protected_ns
 from app.api.v1.admin import api as admin_ns
 
 
-
 def register_namespaces(api):
     """
     Register all v1 namespaces into the Flask-RESTX Api instance.
