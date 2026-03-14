@@ -12,6 +12,24 @@ This part focuses on turning the Part 1 design into a working implementation usi
 
 It includes creating the core entities (such as users, places, reviews, and amenities), defining their relationships, and implementing RESTful API endpoints to handle basic CRUD operations. This phase also emphasizes good project structure, clear API design, data serialization, and endpoint testing using **Postman** tool.
 
+
+## Part 3 — Authentication and Database Integration
+
+In this part, the backend is enhanced with **secure authentication** and **persistent database storage**. The API is protected using **JWT-based authentication** with role-based access control, ensuring that only authorized users can access specific endpoints.
+
+Key improvements include:
+
+- Implementation of **JWT authentication** using Flask-JWT-Extended
+- **Role-based authorization** using the `is_admin` attribute
+- Integration of **SQLAlchemy ORM** to manage database operations
+- Replacement of the in-memory repository with **SQLite** for development
+- Preparation for **MySQL** as the production database
+- Mapping entities (Users, Places, Reviews, Amenities) to relational database tables
+- Ensuring **data validation, consistency, and constraints**
+- Designing and visualizing the database schema using **Mermaid.js ER diagrams**
+
+This phase transitions the application from a prototype using temporary storage to a **secure, scalable backend with persistent data storage**, making it closer to a real-world production-ready system.
+
 ## Authors
 - **Moudhi Almutlaq.**
 - **Yara Aldossari.**
