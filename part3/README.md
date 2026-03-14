@@ -70,21 +70,22 @@ Relationships between these entities are also defined to reflect the application
 ## Getting Started
  
 ### Clone the repository and navigate to Part 3
-markdown
+```markdown
 git clone https://github.com/Modi-01/holbertonschool-hbnb.git
 cd holbertonschool-hbnb/part3
+```
 
  
 ### Create and activate a virtual environment
-markdown
+```markdown
 python3 -m venv venv
 source venv/bin/activate
-
+```
  
 ### Install dependencies
-markdown
+```markdown
 pip install -r requirements.txt
-
+```
  
 ### Configure the application
  
@@ -97,15 +98,16 @@ Configuration values include:
 - SQLALCHEMY_TRACK_MODIFICATIONS
  
 ### Initialize the database
-markdown
+```markdown
 flask db upgrade
+```
 
  
 ### Run the application
-markdown
+```markdown
 flask run
+```
 
- 
 ### Start testing the API
 - user registration
 - login and token generation
